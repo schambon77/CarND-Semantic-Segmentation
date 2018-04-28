@@ -1,46 +1,67 @@
 # Semantic Segmentation
-### Introduction
-In this project, you'll label the pixels of a road in images using a Fully Convolutional Network (FCN).
 
-### Setup
-##### Frameworks and Packages
-Make sure you have the following is installed:
- - [Python 3](https://www.python.org/)
- - [TensorFlow](https://www.tensorflow.org/)
- - [NumPy](http://www.numpy.org/)
- - [SciPy](https://www.scipy.org/)
-##### Dataset
-Download the [Kitti Road dataset](http://www.cvlibs.net/datasets/kitti/eval_road.php) from [here](http://www.cvlibs.net/download.php?file=data_road.zip).  Extract the dataset in the `data` folder.  This will create the folder `data_road` with all the training a test images.
+## Project Objectives
+In this project, we label the pixels of a road in images using a Fully Convolutional Network (FCN).
+The data set used for the model training is the [Kitti Road dataset](http://www.cvlibs.net/datasets/kitti/eval_road.php) accessible from [here](http://www.cvlibs.net/download.php?file=data_road.zip).
 
-### Start
-##### Implement
-Implement the code in the `main.py` module indicated by the "TODO" comments.
-The comments indicated with "OPTIONAL" tag are not required to complete.
-##### Run
-Run the following command to run the project:
-```
-python main.py
-```
-**Note** If running this in Jupyter Notebook system messages, such as those regarding test status, may appear in the terminal rather than the notebook.
+## Project Files
 
-### Submission
-1. Ensure you've passed all the unit tests.
-2. Ensure you pass all points on [the rubric](https://review.udacity.com/#!/rubrics/989/view).
-3. Submit the following in a zip file.
- - `helper.py`
- - `main.py`
- - `project_tests.py`
- - Newest inference images from `runs` folder  (**all images from the most recent run**)
- 
- ### Tips
-- The link for the frozen `VGG16` model is hardcoded into `helper.py`.  The model can be found [here](https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/vgg.zip)
-- The model is not vanilla `VGG16`, but a fully convolutional version, which already contains the 1x1 convolutions to replace the fully connected layers. Please see this [forum post](https://discussions.udacity.com/t/here-is-some-advice-and-clarifications-about-the-semantic-segmentation-project/403100/8?u=subodh.malgonde) for more information.  A summary of additional points, follow. 
-- The original FCN-8s was trained in stages. The authors later uploaded a version that was trained all at once to their GitHub repo.  The version in the GitHub repo has one important difference: The outputs of pooling layers 3 and 4 are scaled before they are fed into the 1x1 convolutions.  As a result, some students have found that the model learns much better with the scaling layers included. The model may not converge substantially faster, but may reach a higher IoU and accuracy. 
-- When adding l2-regularization, setting a regularizer in the arguments of the `tf.layers` is not enough. Regularization loss terms must be manually added to your loss function. otherwise regularization is not implemented.
- 
-### Using GitHub and Creating Effective READMEs
-If you are unfamiliar with GitHub , Udacity has a brief [GitHub tutorial](http://blog.udacity.com/2015/06/a-beginners-git-github-tutorial.html) to get you started. Udacity also provides a more detailed free [course on git and GitHub](https://www.udacity.com/course/how-to-use-git-and-github--ud775).
+* Source code: [main.py](https://github.com/schambon77/CarND-Semantic-Segmentation/blob/master/main.py)
+* [Read me](https://github.com/schambon77/CarND-Semantic-Segmentation/blob/master/README.md)
 
-To learn about REAMDE files and Markdown, Udacity provides a free [course on READMEs](https://www.udacity.com/courses/ud777), as well. 
+## Project Rubric Points
 
-GitHub also provides a [tutorial](https://guides.github.com/features/mastering-markdown/) about creating Markdown files.
+Project rubric points can be found [here](https://review.udacity.com/#!/rubrics/989/view)
+
+### Build the Neural Network
+
+The project loads the pretrained vgg model through the function `load_vgg`.
+
+The project learns the correct features from the images through the function `layers`.
+
+The project optimizes the neural network through the function `optimize`.
+
+The project trains the neural network through the function `train_nn`.
+
+![Loss printout][image1]
+Printout of the loss value during training
+
+
+### Neural Network Training
+
+The project trains the model correctly. On average, the model decreases loss over time.
+
+| Epoch 0            | Epoch 10      | Epoch 20  |  Epoch 30  | Epoch 39 |
+| :------------------ |:-------------:| :---------:|:-----------:|:---------:|
+| ![Epoch 0][image2] | ![Epoch 10][image3] | ![Epoch 20][image4] | ![Epoch 30][image5] | ![Epoch 39][image6] | 
+
+
+The project uses reasonable hyperparameters
+* epochs: 40
+* batch size: 12
+* learning rate: 1e-3
+
+The project correctly labels the road.
+
+![Test image][image7]
+
+![Test image][image8]
+
+![Test image][image9]
+
+![Test image][image10]
+
+
+[//]: # (Image References)
+
+[image1]: ./loss_printout.jpg "Loss printout"
+[image2]: ./epoch0.jpg "Epoch 0"
+[image3]: ./epoch10.jpg "Epoch 10"
+[image4]: ./epoch20.jpg "Epoch 20"
+[image5]: ./epoch30.jpg "Epoch 30"
+[image6]: ./epoch39.jpg "Epoch 39"
+[image7]: ./runs/1524709708.7446492/um_000023.png "Test image"
+[image8]: ./runs/1524709708.7446492/um_000082.png "Test image"
+[image9]: ./runs/1524709708.7446492/umm_000041.png "Test image"
+[image10]: ./runs/1524709708.7446492/uu_000091.png "Test image"
+
